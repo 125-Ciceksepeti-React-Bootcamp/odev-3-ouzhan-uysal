@@ -19,7 +19,7 @@ function Cards() {
   useEffect(() => {
     setItemCount(items.length)
     document.getElementById("numberOfCards").innerHTML = itemCount;
-  }, [itemCount])
+  }, [itemCount, items.length])
 
   // get data from api
   useEffect(() => {
@@ -33,17 +33,17 @@ function Cards() {
         setIsLoaded(true);
         setError(error);
       })
-  }, []);
+  }, []); // only once
   const deleteCard = id => {
     Swal.fire({
-      title: 'Aman Ha!',
-      text: "Gidiyor bak emin misin?",
+      title: 'Silinecek emin miyiz hocam?',
+      text: "Gidiyorum bütün aşklar yüreğimde...",
       icon: 'warning',
       showDenyButton: true,
-      confirmButtonColor: '#093',
-      denyButtonColor: '#c00',
-      confirmButtonText: 'Sil!',
-      denyButtonText: 'Silme!'
+      confirmButtonColor: '#c00',
+      denyButtonColor: '#093',
+      confirmButtonText: 'Sil',
+      denyButtonText: 'Kalsın'
     }).then((result) => {
       if (result.isConfirmed) {
         const copyCards = items.filter(card => card.id !== id)
@@ -97,7 +97,9 @@ function Cards() {
       focusConfirm: false,
       showDenyButton: true,
       confirmButtonColor: '#093',
+      confirmButtonText: 'Değiştir',
       denyButtonColor: '#c00',
+      denyButtonText: 'İptal',
       icon: 'question',
       preConfirm: () => {
         return [
@@ -120,7 +122,7 @@ function Cards() {
 
         Toast.fire({
           icon: 'warning',
-          title: 'Değişiklik Yapılmadı!'
+          title: 'İşlem iptal edildi.'
         })
       }
     })
@@ -142,7 +144,7 @@ function Cards() {
 
       Toast.fire({
         icon: 'success',
-        title: 'İçerik değişikliği başarılı.'
+        title: 'İçerik değiştirildi.'
       })
     }
   }

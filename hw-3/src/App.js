@@ -36,6 +36,7 @@ class App extends React.Component {
         </main>
 
         <footer id="pageFooter">
+          <span>Oğuzhan Uysal</span>
           <a href="https://github.com/ouzhan-uysal">GitHub</a>
         </footer>
       </React.Fragment>
