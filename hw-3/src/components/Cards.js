@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import Modals from './Modals';
+// import Modals from './Modals';
 import { Rating } from 'react-simple-star-rating'
 import Swal from 'sweetalert2';
 
-function Cards() {
+function Cards(card) {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
   const [rating, setRating] = useState(0) // initial rating value
-  const [modalMessage, setModalMessage] = useState({
-    show: false,
-    id: 0,
-    edit: false,
-    remove: false,
-
-  })
+  // const [modalMessage, setModalMessage] = useState({
+  //   show: false,
+  //   id: 0,
+  //   edit: false,
+  //   remove: false,
+  // })
   // rating value
   const handleRating = (rate) => {
     setRating(rate)
@@ -36,9 +35,47 @@ function Cards() {
       })
   }, [])
   const deleteCard = id => {
-    const copyCards = items.filter(card => card.id !== id)
-    setItems(copyCards);
-    console.log(`Card #${id} deleted.`)
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showDenyButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const copyCards = items.filter(card => card.id !== id)
+        setItems(copyCards);
+        Swal.fire(
+          'Deleted!',
+          'Kart silindi.',
+          'success'
+        )
+      }
+      else {
+        Swal.fire(
+          'To Cancel',
+          'İşlem iptal edildi.',
+          'warning')
+      }
+    })
+    // const Toast = Swal.mixin({
+    //   toast: true,
+    //   position: 'top-end',
+    //   showConfirmButton: false,
+    //   timer: 3000,
+    //   timerProgressBar: true,
+    //   didOpen: (toast) => {
+    //     toast.addEventListener('mouseenter', Swal.stopTimer)
+    //     toast.addEventListener('mouseleave', Swal.resumeTimer)
+    //   }
+    // })
+
+    // Toast.fire({
+    //   icon: 'success',
+    //   title: 'Kart başarıyla silindi'
+    // })
   }
   const editCard = async id => {
     // open edit modal
@@ -48,18 +85,53 @@ function Cards() {
         '<p>New Title:</p> <input id="newTitleInput" class="swal2-input">' +
         '<p>New Body Content:</p> <input id="newBodyInput" class="swal2-input">',
       focusConfirm: false,
-      showCancelButton: true,
+      showDenyButton: true,
       icon: 'question',
       preConfirm: () => {
         return [
           document.getElementById('newTitleInput').value,
           document.getElementById('newBodyInput').value
         ]
+      },
+      preDeny: () => {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'warning',
+          title: 'Değişiklik Yapılmadı!'
+        })
       }
     })
     if (formValues) {
       document.getElementById(`title${id}`).innerHTML = formValues[0];
       document.getElementById(`description${id}`).innerHTML = formValues[1];
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+
+      Toast.fire({
+        icon: 'success',
+        title: 'İçerik değişikliği başarılı.'
+      })
     }
   }
 

@@ -19,7 +19,7 @@ class App extends React.Component {
         </header>
 
         <main id="pageMain">
-          <Cards/>
+          <Cards card={this.state.cardCount}/>
         </main>
 
         <footer id="pageFooter">

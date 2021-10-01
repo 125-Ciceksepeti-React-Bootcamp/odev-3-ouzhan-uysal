@@ -40,13 +40,12 @@ body {
       background-color: $color3;
       .card-container {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(25em, 1fr));
         .card-item {
           margin: 5%;
           padding: 0.7em;
           display: grid;
           align-content: space-between;
-          justify-items: stretch;
           border: 1px solid #fff;
           border-radius: 5px;
           color: #fff;
@@ -63,6 +62,7 @@ body {
             }
           }
           img {
+            justify-self: center;
             object-fit: cover;
             max-width: 100%;
             max-height: 100%;
