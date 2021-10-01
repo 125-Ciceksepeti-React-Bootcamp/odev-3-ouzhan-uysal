@@ -45,11 +45,12 @@ body {
           margin: 5%;
           padding: 0.7em;
           display: grid;
-          align-content: center;
-          justify-items: center;
+          align-content: space-between;
+          justify-items: stretch;
           border: 1px solid #fff;
           border-radius: 5px;
           color: #fff;
+          text-align: center;
           button {
             background: transparent;
             color: #fff;
@@ -77,18 +78,15 @@ body {
             padding: 0.5em;
             cursor: pointer;
             user-select: none;
-            &:hover {
-              white-space: normal;
-              overflow: visible;
-              height: auto;
-            }
           }
-
           .description {
             padding: 0.5em;
+            display: inline-block;
             text-align: center;
-            cursor: pointer;
             user-select: none;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
             &::first-letter {
               text-transform: uppercase;
             }
