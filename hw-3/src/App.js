@@ -7,21 +7,16 @@ class App extends React.Component {
     super(props);
     this.state = {
       searchInput: '',
-      cardCount: props.cards,
-      cards: [],
-      filteredCards: []
     }
   }
   handleInput = e => {
+    console.log(e.target.value)
     this.setState({
       searchInput: e.target.value
     })
   }
   handleSearch = e => {
-    const filteredCards = this.state.cards.filter(card => card.title.includes(e.target.value));
-    this.setState({
-      filteredCards
-    })
+    
   }
   render() {
     return (
@@ -32,12 +27,12 @@ class App extends React.Component {
 
             <input type="text" value={this.state.searchInput} placeholder="Search..." onChange={this.handleInput} />
 
-            <p>Number of Cards: { this.state.cardCount }</p>
+            <p>Number of Cards: <span id="numberOfCards"></span></p>
           </div>
         </header>
 
         <main id="pageMain">
-          <Cards itemCount={this.state.cardCount} />
+          <Cards/>
         </main>
 
         <footer id="pageFooter">

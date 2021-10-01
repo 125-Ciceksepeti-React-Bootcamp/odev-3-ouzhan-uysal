@@ -3,28 +3,24 @@ import React, { useState, useEffect } from 'react';
 import { Rating } from 'react-simple-star-rating'
 import Swal from 'sweetalert2';
 
-function Cards(props) {
-  // console.log("Props: ", props.itemCount)
+function Cards() {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
   const [itemCount, setItemCount] = useState(0);
-  const [rating, setRating] = useState(0) // initial rating value
-  // const [modalMessage, setModalMessage] = useState({
-  //   show: false,
-  //   id: 0,
-  //   edit: false,
-  //   remove: false,
-  // })
-  // rating value
-  const handleRating = (rate) => {
+  const [rating, setRating] = useState(0);  // initial rating value
+
+  const handleRating = rate => {
     setRating(rate)
-    // Some logic
+    // document.getElementById(`star${id}`).innerHTML = rate;
   }
+
   // card counter
   useEffect(() => {
     setItemCount(items.length)
-  }, [items])
+    document.getElementById("numberOfCards").innerHTML = itemCount;
+  }, [itemCount])
+
   // get data from api
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts")
@@ -37,7 +33,7 @@ function Cards(props) {
         setIsLoaded(true);
         setError(error);
       })
-  }, [])
+  }, []);
   const deleteCard = id => {
     Swal.fire({
       title: 'Aman Ha!',
