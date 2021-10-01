@@ -1,29 +1,47 @@
 import './App.scss';
 import React from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
 import Cards from './components/Cards';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cardCount: 0,
+      searchInput: '',
+      cardCount: props.cards,
+      cards: [],
+      filteredCards: []
     }
+  }
+  handleInput = e => {
+    this.setState({
+      searchInput: e.target.value
+    })
+  }
+  handleSearch = e => {
+    const filteredCards = this.state.cards.filter(card => card.title.includes(e.target.value));
+    this.setState({
+      filteredCards
+    })
   }
   render() {
     return (
       <React.Fragment>
         <header id="pageHeader">
-          <Header />
+          <div className="header-split">
+            <img src="./ciceksepeti.png" alt="header-logo" />
+
+            <input type="text" value={this.state.searchInput} placeholder="Search..." onChange={this.handleInput} />
+
+            <p>Number of Cards: { this.state.cardCount }</p>
+          </div>
         </header>
 
         <main id="pageMain">
-          <Cards card={this.state.cardCount}/>
+          <Cards itemCount={this.state.cardCount} />
         </main>
 
         <footer id="pageFooter">
-          <Footer />
+          <a href="https://github.com/ouzhan-uysal">GitHub</a>
         </footer>
       </React.Fragment>
     )

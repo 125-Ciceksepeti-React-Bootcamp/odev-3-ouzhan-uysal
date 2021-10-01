@@ -3,10 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { Rating } from 'react-simple-star-rating'
 import Swal from 'sweetalert2';
 
-function Cards(card) {
+function Cards(props) {
+  // console.log("Props: ", props.itemCount)
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
+  const [itemCount, setItemCount] = useState(0);
   const [rating, setRating] = useState(0) // initial rating value
   // const [modalMessage, setModalMessage] = useState({
   //   show: false,
@@ -19,16 +21,18 @@ function Cards(card) {
     setRating(rate)
     // Some logic
   }
-
-  //  <button>&#10003;</button> --> Tik
-  //  <button>&#10008;</button> --> X
+  // card counter
+  useEffect(() => {
+    setItemCount(items.length)
+  }, [items])
   // get data from api
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts")
-      .then(response => response.json())
+      .then(res => res.json())
       .then(data => {
         setIsLoaded(true);
         setItems(data);
+        setItemCount(itemCount + 1)
       }, error => {
         setIsLoaded(true);
         setError(error);
@@ -36,17 +40,19 @@ function Cards(card) {
   }, [])
   const deleteCard = id => {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: 'Aman Ha!',
+      text: "Gidiyor bak emin misin?",
       icon: 'warning',
       showDenyButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: '#093',
+      denyButtonColor: '#c00',
+      confirmButtonText: 'Sil!',
+      denyButtonText: 'Silme!'
     }).then((result) => {
       if (result.isConfirmed) {
         const copyCards = items.filter(card => card.id !== id)
         setItems(copyCards);
+        setItemCount(itemCount - 1);
 
         const Toast = Swal.mixin({
           toast: true,
@@ -90,10 +96,12 @@ function Cards(card) {
     const { value: formValues } = await Swal.fire({
       title: `Card${id}: New Values`,
       html:
-        '<p>New Title:</p> <input id="newTitleInput" class="swal2-input">' +
-        '<p>New Body Content:</p> <input id="newBodyInput" class="swal2-input">',
+        '<p>Title:</p> <input id="newTitleInput" class="swal2-input">' +
+        '<p>Body:</p> <input id="newBodyInput" class="swal2-input">',
       focusConfirm: false,
       showDenyButton: true,
+      confirmButtonColor: '#093',
+      denyButtonColor: '#c00',
       icon: 'question',
       preConfirm: () => {
         return [
