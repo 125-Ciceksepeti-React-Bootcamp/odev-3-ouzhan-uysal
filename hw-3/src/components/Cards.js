@@ -47,35 +47,43 @@ function Cards(card) {
       if (result.isConfirmed) {
         const copyCards = items.filter(card => card.id !== id)
         setItems(copyCards);
-        Swal.fire(
-          'Deleted!',
-          'Kart silindi.',
-          'success'
-        )
+
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Kart başarıyla silindi'
+        })
       }
       else {
-        Swal.fire(
-          'To Cancel',
-          'İşlem iptal edildi.',
-          'warning')
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+
+        Toast.fire({
+          icon: 'warning',
+          title: 'İşlem iptal edildi.'
+        })
       }
     })
-    // const Toast = Swal.mixin({
-    //   toast: true,
-    //   position: 'top-end',
-    //   showConfirmButton: false,
-    //   timer: 3000,
-    //   timerProgressBar: true,
-    //   didOpen: (toast) => {
-    //     toast.addEventListener('mouseenter', Swal.stopTimer)
-    //     toast.addEventListener('mouseleave', Swal.resumeTimer)
-    //   }
-    // })
-
-    // Toast.fire({
-    //   icon: 'success',
-    //   title: 'Kart başarıyla silindi'
-    // })
   }
   const editCard = async id => {
     // open edit modal
